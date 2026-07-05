@@ -1012,6 +1012,8 @@ def tampil_step3():
 # ==========================================================
 
 def tampil_step4():
+    st.write("STEP:", st.session_state.step)
+    st.write(dict(st.session_state))
 
     st.subheader("📝 Konfirmasi Permohonan")
 
