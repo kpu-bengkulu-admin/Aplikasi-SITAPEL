@@ -4,9 +4,6 @@ import streamlit as st
 from pages.dashboard import show_dashboard
 from pages.permohonan import show_permohonan
 
-from auth.token import is_logged_in
-from auth.oauth import get_authorization_url, fetch_token_from_request
-
 
 # ======================================================
 # CONFIG
@@ -20,52 +17,18 @@ st.set_page_config(
 
 
 # ======================================================
-# OAUTH CALLBACK (PRODUCTION SAFE)
-# ======================================================
-
-if "code" in st.query_params:
-    st.session_state["oauth_code"] = st.query_params["code"]
-
-code = st.session_state.get("oauth_code")
-
-if code and not st.session_state.get("oauth_done"):
-    st.session_state["oauth_done"] = True
-
-    try:
-        token = fetch_token_from_request(st.query_params)
-
-        st.session_state["logged_in"] = True
-        st.session_state["token_data"] = token
-
-    except Exception as e:
-        st.error(f"OAuth error: {e}")
-
-
-# ======================================================
 # SESSION INIT
 # ======================================================
 
-if "page" not in st.session_state:
-    st.session_state.page = "dashboard"
+DEFAULT_SESSION = {
+    "page": "dashboard",
+    "step": 1,
+    "layanan": "",
+}
 
-
-# ======================================================
-# LOGIN GUARD
-# ======================================================
-
-if not is_logged_in():
-
-    st.title("SITAPEL - Login Admin")
-
-    auth_url = get_authorization_url()
-
-    st.markdown(f"""
-        <a href="{auth_url}" target="_self">
-            🔐 Login dengan Google
-        </a>
-    """, unsafe_allow_html=True)
-
-    st.stop()
+for key, value in DEFAULT_SESSION.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
 
 
 # ======================================================

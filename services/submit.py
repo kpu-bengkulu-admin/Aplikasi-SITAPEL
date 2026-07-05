@@ -124,13 +124,13 @@ def submit_permohonan():
 
     try:
 
-        upload_semua_dokumen(folder_id)
+        hasil_upload = upload_semua_dokumen(folder_id)
 
     except Exception as e:
 
-        st.error(f"Gagal upload dokumen: {e}")
-
-        return None
+        raise Exception(
+            f"Gagal mengupload dokumen ke Google Drive.\n\n{e}"
+        )
 
     # ======================================================
     # DATA SHEETS
@@ -146,9 +146,9 @@ def submit_permohonan():
 
     except Exception as e:
 
-        st.error(f"Gagal menyimpan data: {e}")
-
-        return None
+        raise Exception(
+            f"Gagal menyimpan data ke Google Sheets.\n\n{e}"
+        )
 
 
     # ======================================================

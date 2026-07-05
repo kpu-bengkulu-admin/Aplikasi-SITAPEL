@@ -1,32 +1,34 @@
 # ==========================================================
-# SITAPEL v3
 # auth/token.py
-# OAuth Token Handler
+# OAuth Refresh Token Manager
 # ==========================================================
 
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 import streamlit as st
-from auth.oauth import get_flow
+
+SCOPES = [
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/spreadsheets",
+]
 
 
-def fetch_token_from_code(code: str):
+def get_credentials():
+    """
+    Menghasilkan credentials Google yang selalu valid.
+    Access token akan diperbarui otomatis menggunakan refresh token.
+    """
 
-    flow = get_flow()
+    creds = Credentials(
+        token=None,
+        refresh_token=st.secrets["GOOGLE_REFRESH_TOKEN"],
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=st.secrets["GOOGLE_CLIENT_ID"],
+        client_secret=st.secrets["GOOGLE_CLIENT_SECRET"],
+        scopes=SCOPES,
+    )
 
-    flow.fetch_token(code=code)
+    # Minta access token baru
+    creds.refresh(Request())
 
-    credentials = flow.credentials
-
-    st.session_state["google_credentials"] = credentials
-
-    return credentials
-
-
-def is_logged_in():
-
-    return "google_credentials" in st.session_state
-
-
-def logout():
-
-    if "google_credentials" in st.session_state:
-        del st.session_state["google_credentials"]
+    return creds

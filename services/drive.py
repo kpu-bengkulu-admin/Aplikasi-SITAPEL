@@ -1,14 +1,15 @@
 # ==========================================================
 # SITAPEL v3
 # services/drive.py
-# Google Drive (OAuth - Streamlit Cloud Ready)
+# Google Drive (Refresh Token)
 # ==========================================================
 
 import io
-import streamlit as st
 
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
+
+from auth.google_refresh import get_credentials
 
 
 # ==========================================================
@@ -16,11 +17,12 @@ from googleapiclient.http import MediaIoBaseUpload
 # ==========================================================
 
 def get_drive_service():
+    """
+    Membuat Google Drive service menggunakan
+    OAuth Refresh Token.
+    """
 
-    credentials = st.session_state.get("google_credentials")
-
-    if not credentials:
-        raise Exception("User belum login Google")
+    credentials = get_credentials()
 
     return build(
         "drive",
@@ -33,17 +35,22 @@ def get_drive_service():
 # BUAT FOLDER
 # ==========================================================
 
-def buat_folder(nama_folder, parent_id=None):
+def buat_folder(
+    nama_folder,
+    parent_id=None
+):
 
     service = get_drive_service()
 
+    # gunakan folder induk dari secrets jika tidak dikirim
+    if parent_id is None:
+        parent_id = st.secrets["GOOGLE_DRIVE_FOLDER_ID"]
+
     metadata = {
         "name": nama_folder,
-        "mimeType": "application/vnd.google-apps.folder"
+        "mimeType": "application/vnd.google-apps.folder",
+        "parents": [parent_id]
     }
-
-    if parent_id:
-        metadata["parents"] = [parent_id]
 
     folder = service.files().create(
         body=metadata,
@@ -57,14 +64,18 @@ def buat_folder(nama_folder, parent_id=None):
 # UPLOAD FILE
 # ==========================================================
 
-def upload_file(file, nama_file, folder_id):
+def upload_file(
+    file,
+    nama_file,
+    folder_id
+):
 
     service = get_drive_service()
 
-    file_stream = io.BytesIO(file.read())
+    file.seek(0)
 
     media = MediaIoBaseUpload(
-        file_stream,
+        io.BytesIO(file.read()),
         mimetype=file.type,
         resumable=True
     )
@@ -84,7 +95,7 @@ def upload_file(file, nama_file, folder_id):
 
 
 # ==========================================================
-# SET PERMISSION (PUBLIC READ OPTIONAL)
+# SET PUBLIC
 # ==========================================================
 
 def set_public(file_id):
