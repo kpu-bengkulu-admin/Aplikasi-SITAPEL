@@ -18,7 +18,7 @@ st.set_page_config(
 
     page_title=APP_NAME,
 
-    page_icon="🗳️",
+    page_icon="assets/logo_kpu.png",
 
     layout="wide",
 

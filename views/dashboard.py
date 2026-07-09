@@ -1,7 +1,7 @@
 # ==========================================================
 # SITAPEL PDPB 2026
 # views/dashboard.py
-# BAGIAN 1
+# BAGIAN 1 - UI REDESIGN
 # ==========================================================
 
 import os
@@ -15,10 +15,70 @@ import streamlit as st
 def show_dashboard():
 
     # ======================================================
-    # HEADER
+    # CUSTOM PAGE POSITION
     # ======================================================
 
-    col_logo, col_title = st.columns([1, 5])
+    st.markdown(
+        """
+        <style>
+
+        .block-container {
+            padding-top: 0rem;
+            padding-bottom: 1rem;
+        }
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <style>
+
+        /* BUTTON AJUKAN PERMOHONAN */
+        div.stButton > button {
+
+            background-color:#7A0019;
+            color:white;
+
+            border-radius:12px;
+            border:none;
+
+            height:45px;
+
+            font-size:16px;
+            font-weight:600;
+
+            transition:0.3s;
+
+        }
+
+
+        div.stButton > button:hover {
+
+            background-color:#D4AF37;
+            color:#7A0019;
+
+            border:none;
+
+        }
+
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # ======================================================
+    # HEADER HERO KPU STYLE
+    # ======================================================
+
+    col_logo, col_title = st.columns(
+        [1, 5],
+        vertical_alignment="center"
+    )
+
 
     with col_logo:
 
@@ -28,69 +88,206 @@ def show_dashboard():
 
             st.image(
                 logo_path,
-                width=150
+                width=130
             )
+
 
     with col_title:
 
-        st.title(
-            "SITAPEL KPU KOTA BENGKULU"
+        st.markdown(
+            """
+            <h1 style="
+                color:#7A0019;
+                margin-bottom:0px;
+                font-size:60px;
+            ">
+            SITAPEL KPU KOTA BENGKULU
+            </h1>
+
+            <p style="
+                color:#D4AF37;
+                font-size:30px;
+                font-weight:600;
+            ">
+            Pemutakhiran Data Pemilih Berkelanjutan (PDPB) 2026
+            </p>
+            """,
+            unsafe_allow_html=True
         )
 
-        st.subheader(
-            "Pemutakhiran Data Pemilih "
-            "Berkelanjutan (PDPB) 2026"
-        )
 
-    st.divider()
-
-    # ======================================================
-    # HERO
-    # ======================================================
-
-    st.info(
+    st.markdown(
         """
-### Selamat Datang di SITAPEL
-
-SITAPEL merupakan layanan digital KPU Kota Bengkulu
-yang digunakan masyarakat Kota Bengkulu untuk mengajukan
-permohonan pelayanan Pemutakhiran Data Pemilih
-Berkelanjutan (PDPB) Tahun 2026.
-
-Silakan memilih salah satu jenis layanan
-sesuai kebutuhan Anda.
-"""
+        <hr style="
+        border:1px solid #D4AF37;
+        margin-top:10px;
+        ">
+        """,
+        unsafe_allow_html=True
     )
 
-    st.write("")
+
+
+    # ======================================================
+    # HERO SECTION
+    # ======================================================
+
+
+    st.markdown(
+        """
+        <div style="
+            background:linear-gradient(
+                135deg,
+                #7A0019,
+                #4A0010
+            );
+            padding:35px;
+            border-radius:18px;
+            color:white;
+            margin-bottom:25px;
+        ">
+
+        <h2 style="
+            color:white;
+            margin-bottom:10px;
+        ">
+        Selamat Datang di SITAPEL
+        </h2>
+
+
+        <p style="
+            font-size:17px;
+            line-height:1.7;
+        ">
+        Sistem Pelayanan digital KPU Kota Bengkulu
+        untuk masyarakat Kota Bengkulu dalam pengajuan permohonan
+        Pemutakhiran Data Pemilih Berkelanjutan (PDPB)
+        Tahun 2026.
+        </p>
+
+
+        <p style="
+            color:#FFD700;
+            font-weight:bold;
+            font-size:16px;
+        ">
+        Cepat • Mudah • Transparan
+        </p>
+
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 
     # ======================================================
     # ALUR PELAYANAN
     # ======================================================
 
+
     st.subheader(
         "🔄 Alur Pelayanan"
     )
 
+
     langkah = [
 
-        "1️⃣ Pilih Jenis Layanan",
+        (
+            "1",
+            "Pilih Layanan",
+            "Pilih jenis permohonan sesuai kebutuhan"
+        ),
 
-        "2️⃣ Isi Data Pemohon",
+        (
+            "2",
+            "Isi Data Pemohon",
+            "Lengkapi informasi pemohon"
+        ),
 
-        "3️⃣ Upload Dokumen Persyaratan",
+        (
+            "3",
+            "Upload Dokumen",
+            "Unggah dokumen persyaratan"
+        ),
 
-        "4️⃣ Verifikasi Oleh Petugas KPU",
+        (
+            "4",
+            "Verifikasi",
+            "Petugas KPU melakukan pemeriksaan"
+        ),
 
-        "5️⃣ Permohonan Selesai"
+        (
+            "5",
+            "Selesai",
+            "Permohonan berhasil diproses"
+        )
 
     ]
 
-    for item in langkah:
 
-        st.success(item)
+    cols = st.columns(5)
+
+
+    for col, item in zip(cols, langkah):
+
+        nomor, judul, ket = item
+
+
+        with col:
+
+            st.markdown(
+                f"""
+                <div style="
+                    background:#ffffff;
+                    border:2px solid #D4AF37;
+                    border-radius:15px;
+                    padding:15px;
+                    text-align:center;
+                    min-height:150px;
+                ">
+
+
+                <div style="
+                    background:#7A0019;
+                    color:white;
+                    width:40px;
+                    height:40px;
+                    border-radius:50%;
+                    margin:auto;
+                    line-height:40px;
+                    font-size:20px;
+                    font-weight:bold;
+                ">
+                {nomor}
+                </div>
+
+
+                <h4 style="
+                    color:#7A0019;
+                    margin-top:15px;
+                ">
+                {judul}
+                </h4>
+
+
+                <p style="
+                    font-size:13px;
+                    color:#555;
+                ">
+                {ket}
+                </p>
+
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
 
     st.write("")
+
 
     # ======================================================
     # PILIH JENIS LAYANAN
@@ -100,30 +297,77 @@ sesuai kebutuhan Anda.
         "📌 Pilih Jenis Layanan"
     )
 
+
     st.write(
         """
 Silakan memilih salah satu jenis layanan
-yang tersedia di bawah ini.
+yang tersedia.
 """
     )
 
     st.write("")
 
+
+    # ======================================================
+    # CARD LAYANAN
+    # ======================================================
+
+
+    layanan_cols = st.columns(3)
+
+
+
     # ======================================================
     # LAYANAN 1
     # ======================================================
 
-    with st.container():
+    with layanan_cols[0]:
 
-        st.markdown("### 🏠 Pindah Domisili / Tempat Tinggal")
-
-        st.write(
+        st.markdown(
             """
-Pelayanan bagi Masyarakat yang berpindah
-domisili atau tempat tinggal dalam wilayah
-Kota Bengkulu.
-"""
+            <div style="
+                background:white;
+                border-radius:18px;
+                padding:25px;
+                border-top:6px solid #7A0019;
+                min-height:280px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            ">
+
+            <h2 style="
+                text-align:center;
+            ">
+            🏠
+            </h2>
+
+
+            <h3 style="
+                text-align:center;
+                color:#7A0019;
+            ">
+            Pindah Domisili
+            </h3>
+
+
+            <p style="
+                text-align:center;
+                color:#555;
+            ">
+            Pelayanan bagi masyarakat
+            yang berpindah domisili
+            atau tempat tinggal dalam
+            wilayah Kota Bengkulu.
+            </p>
+
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
+
+
+        st.write("")
+
 
         if st.button(
             "Ajukan Permohonan",
@@ -141,26 +385,60 @@ Kota Bengkulu.
 
             st.rerun()
 
-    st.divider()
+
 
     # ======================================================
     # LAYANAN 2
     # ======================================================
 
-    with st.container():
+    with layanan_cols[1]:
 
         st.markdown(
-            "### 🆕 Pemilih Baru / Belum Terdaftar Dalam DPT"
+            """
+            <div style="
+                background:white;
+                border-radius:18px;
+                padding:25px;
+                border-top:6px solid #D4AF37;
+                min-height:280px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            ">
+
+
+            <h2 style="
+                text-align:center;
+            ">
+            🆕
+            </h2>
+
+
+            <h3 style="
+                text-align:center;
+                color:#7A0019;
+            ">
+            Pemilih Baru
+            </h3>
+
+
+            <p style="
+                text-align:center;
+                color:#555;
+            ">
+            Pelayanan bagi pemilih pemula,
+            pemilih yang belum terdaftar
+            dalam DPT, serta pensiunan
+            TNI/POLRI.
+            </p>
+
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
-        st.write(
-            """
-Pelayanan bagi pemilih pemula,
-pemilih yang belum terdaftar dalam DPT,
-serta pensiunan TNI/POLRI yang telah
-memenuhi syarat sebagai pemilih.
-"""
-        )
+
+        st.write("")
+
 
         if st.button(
             "Ajukan Permohonan",
@@ -178,27 +456,61 @@ memenuhi syarat sebagai pemilih.
 
             st.rerun()
 
-    st.divider()
+
 
     # ======================================================
     # LAYANAN 3
     # ======================================================
 
-    with st.container():
+    with layanan_cols[2]:
+
 
         st.markdown(
-            "### 📄 Pemilih Tidak Memenuhi Syarat (TMS)"
+            """
+            <div style="
+                background:white;
+                border-radius:18px;
+                padding:25px;
+                border-top:6px solid #7A0019;
+                min-height:280px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            ">
+
+
+            <h2 style="
+                text-align:center;
+            ">
+            📄
+            </h2>
+
+
+            <h3 style="
+                text-align:center;
+                color:#7A0019;
+            ">
+            Pemilih TMS
+            </h3>
+
+
+            <p style="
+                text-align:center;
+                color:#555;
+            ">
+            Pelayanan untuk pemilih
+            yang sudah tidak memenuhi
+            syarat seperti meninggal dunia,
+            TNI, atau POLRI.
+            </p>
+
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
-        st.write(
-            """
-Pelayanan untuk pemilih yang
-sudah tidak memenuhi syarat,
-seperti meninggal dunia,
-menjadi anggota TNI,
-atau menjadi anggota POLRI.
-"""
-        )
+
+        st.write("")
+
 
         if st.button(
             "Ajukan Permohonan",
@@ -216,138 +528,208 @@ atau menjadi anggota POLRI.
 
             st.rerun()
 
+
     st.write("")
 
     # ======================================================
     # PERSYARATAN UMUM
     # ======================================================
+
 
     st.subheader(
         "📂 Persyaratan Umum"
     )
 
-    st.info(
+
+    st.markdown(
         """
-Sebelum mengajukan permohonan, siapkan dokumen berikut:
+        <div style="
+            background:white;
+            border-left:6px solid #D4AF37;
+            border-radius:15px;
+            padding:25px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        ">
 
-✅ KTP Elektronik
+        <h4 style="
+            color:#7A0019;
+        ">
+        Dokumen yang perlu disiapkan:
+        </h4>
 
-✅ Kartu Keluarga (KK)
 
-✅ Dokumen pendukung sesuai jenis layanan.
-"""
+        <ul style="
+            line-height:2;
+            font-size:16px;
+        ">
+
+        <li>✅ KTP Elektronik</li>
+
+        <li>✅ Kartu Keluarga (KK)</li>
+
+        <li>✅ Dokumen pendukung sesuai jenis layanan</li>
+
+        </ul>
+
+
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
 
     st.write("")
 
+
+
     # ======================================================
-    # PERSYARATAN SETIAP LAYANAN
+    # PERSYARATAN BERDASARKAN LAYANAN
     # ======================================================
+
 
     st.subheader(
         "📋 Persyaratan Berdasarkan Jenis Layanan"
     )
 
+
+
     with st.expander(
-        "🏠 Pindah Domisili / Tempat Tinggal",
-        expanded=False
+        "🏠 Pindah Domisili / Tempat Tinggal"
     ):
 
         st.markdown(
             """
-**Persyaratan:**
+    ### Persyaratan
 
-- KTP Elektronik
-- Kartu Keluarga
-- Alamat domisili baru di Kota Bengkulu
+    ✅ KTP Elektronik
 
-**Keterangan**
+    ✅ Kartu Keluarga
 
-Digunakan bagi masyarakat yang pindah
-domisili atau tempat tinggal dalam
-wilayah Kota Bengkulu.
-"""
+    ✅ Alamat domisili baru di Kota Bengkulu
+
+
+    ### Keterangan
+
+    Digunakan bagi masyarakat yang pindah
+    domisili atau tempat tinggal dalam
+    wilayah Kota Bengkulu.
+    """
         )
 
+
+
     with st.expander(
-        "🆕 Pemilih Baru / Belum Terdaftar Dalam DPT",
-        expanded=False
+        "🆕 Pemilih Baru / Belum Terdaftar Dalam DPT"
     ):
 
         st.markdown(
             """
-**Persyaratan:**
+    ### Persyaratan
 
-- Kartu Keluarga
-- KTP Elektronik (apabila sudah memiliki)
+    ✅ Kartu Keluarga
 
-**Kategori:**
+    ✅ KTP Elektronik (apabila sudah memiliki)
 
-- Pemilih Pemula
-- Belum terdaftar dalam DPT
-- Pensiunan TNI
-- Pensiunan POLRI
-"""
+
+    ### Kategori
+
+    - Pemilih Pemula
+    - Belum terdaftar dalam DPT
+    - Pensiunan TNI
+    - Pensiunan POLRI
+    """
         )
 
+
+
     with st.expander(
-        "📄 Pemilih Tidak Memenuhi Syarat (TMS)",
-        expanded=False
+        "📄 Pemilih Tidak Memenuhi Syarat (TMS)"
     ):
 
         st.markdown(
             """
-**Persyaratan:**
+    ### Persyaratan
 
-- KTP Elektronik
-- Kartu Keluarga
-- Dokumen pendukung sesuai kategori
+    ✅ KTP Elektronik
 
-**Kategori TMS:**
+    ✅ Kartu Keluarga
 
-- Meninggal Dunia
-- Menjadi Anggota TNI
-- Menjadi Anggota POLRI
-"""
+    ✅ Dokumen pendukung sesuai kategori
+
+
+    ### Kategori TMS
+
+    - Meninggal Dunia
+    - Menjadi Anggota TNI
+    - Menjadi Anggota POLRI
+    """
         )
+
+
 
     st.write("")
 
-    # ==========================================================
-    # PERSYARATAN UMUM
-    # ==========================================================
 
-    st.write("")
 
-    st.subheader("📂 Persyaratan Umum")
+    # ======================================================
+    # CEK STATUS PERMOHONAN
+    # ======================================================
 
-    st.info(
-        """
-Sebelum mengajukan permohonan, siapkan dokumen berikut:
 
-✅ KTP Elektronik
-
-✅ Kartu Keluarga (KK)
-
-✅ Dokumen pendukung sesuai jenis layanan yang dipilih.
-"""
+    st.subheader(
+        "🔎 Cek Status Permohonan"
     )
 
+
+
+    st.markdown(
+        """
+        <div style="
+            background:linear-gradient(
+                135deg,
+                #7A0019,
+                #4A0010
+            );
+            padding:30px;
+            border-radius:18px;
+            color:white;
+        ">
+
+        <h3 style="
+            color:white;
+            text-align:center;
+        ">
+        Pantau Proses Permohonan Anda
+        </h3>
+
+
+        <p style="
+            text-align:center;
+            color:#FFD700;
+        ">
+        Masukkan nomor permohonan SITAPEL
+        </p>
+
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
     st.write("")
 
-    # ==========================================================
-    # CEK STATUS PERMOHONAN
-    # ==========================================================
 
-    st.subheader("🔎 Cek Status Permohonan")
 
     nomor = st.text_input(
         "Nomor Permohonan",
         placeholder="Contoh : SITAPEL-2026-000001"
     )
 
+
+
     if st.button(
-        "Cek Status",
+        "🔎 Cek Status",
         use_container_width=True
     ):
 
@@ -365,38 +747,64 @@ Sebelum mengajukan permohonan, siapkan dokumen berikut:
 
             st.rerun()
 
+
+
     st.write("")
 
-    # ==========================================================
+
+
+    # ======================================================
     # FOOTER
-    # ==========================================================
+    # ======================================================
+
 
     st.markdown(
         """
-        ---
+        <hr style="
+        border:1px solid #D4AF37;
+        ">
         """,
         unsafe_allow_html=True
     )
 
+
+
     st.markdown(
         """
-        <div style="text-align:center;padding:20px;">
+        <div style="
+            text-align:center;
+            padding:25px;
+        ">
 
-        <h4 style="color:#0b4da2;margin-bottom:5px;">
-        KOMISI PEMILIHAN UMUM KOTA BENGKULU
-        </h4>
 
-        <b>SITAPEL PDPB 2026</b><br>
+        <h3 style="
+            color:#7A0019;
+            margin-bottom:5px;
+        ">
+        KOMISI PEMILIHAN UMUM
+        KOTA BENGKULU
+        </h3>
 
-        Sistem Informasi Pelayanan Data Pemilih
+
+        <b style="
+            color:#D4AF37;
+        ">
+        SITAPEL PDPB 2026
+        </b>
+
+
+        <p>
+        Sistem Informasi Pelayanan Pemutakhiran Data Pemilih
         secara Berkelanjutan
+        </p>
 
-        <br><br>
 
-        © 2026 KPU Kota Bengkulu
+        <small>
+        ©by.es 2026 KPU Kota Bengkulu
+        </small>
+
 
         </div>
         """,
         unsafe_allow_html=True
     )
-
