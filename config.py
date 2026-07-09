@@ -1,152 +1,226 @@
 # ==========================================================
-# SITAPEL v3.0
-# config.py
+# SITAPEL v4
+#
+# File        : config.py
+# Status      : FINAL
+# Version     : 4.0.0
+#
+# Python      : 3.14+
+# Streamlit   : 1.58+
+#
+# Description :
+# Central Configuration
+#
 # ==========================================================
 
-from pathlib import Path
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Final
+
+import streamlit as st
+APP_NAME: Final = "SITAPEL PDPB 2026"
 
 # ==========================================================
-# INFORMASI APLIKASI
+# GOOGLE
 # ==========================================================
 
-APP_NAME = "SITAPEL"
-APP_VERSION = "3.0"
-APP_AUTHOR = "KPU"
+@dataclass(frozen=True, slots=True)
+class GoogleConfig:
+
+    client_id: str
+
+    client_secret: str
+
+    redirect_uri: str
+
+    scopes: tuple[str, ...]
+
 
 # ==========================================================
-# BASE DIRECTORY
+# SUPABASE
 # ==========================================================
 
-BASE_DIR = Path(__file__).resolve().parent
+@dataclass(frozen=True, slots=True)
+class SupabaseConfig:
+    """
+    Supabase Configuration.
+    """
+
+    url: str
+    key: str
+
 
 # ==========================================================
-# GOOGLE SERVICE ACCOUNT
+# CRYPTO
 # ==========================================================
 
-SERVICE_ACCOUNT_FILE = BASE_DIR / "service_account.json"
+@dataclass(frozen=True, slots=True)
+class CryptoConfig:
+    """
+    Encryption Configuration.
+    """
 
-# Alias untuk services
-GOOGLE_SERVICE_ACCOUNT = str(SERVICE_ACCOUNT_FILE)
+    fernet_key: str
 
-# ==========================================================
-# GOOGLE SHEETS
-# ==========================================================
-
-SPREADSHEET_ID = "18h8koqclETHuwSgcXO53f3C938-F41y4YUWCY4rVv94"
-
-WORKSHEET_NAME = "Sheet1"
 
 # ==========================================================
 # GOOGLE DRIVE
 # ==========================================================
 
-PARENT_FOLDER_ID = "1Fg0J7ffU88Aw5KWTf3kPr2Vwzgt_jEEh"
+@dataclass(frozen=True, slots=True)
+class DriveConfig:
+    """
+    Google Drive Configuration.
+    """
 
-# Alias untuk services
-DRIVE_PARENT_FOLDER = PARENT_FOLDER_ID
+    folder_id: str
+
 
 # ==========================================================
-# GOOGLE API SCOPES
+# GOOGLE SHEETS
 # ==========================================================
 
-SCOPES = [
-    "https://www.googleapis.com/auth/drive",
+@dataclass(frozen=True, slots=True)
+class SheetsConfig:
+    """
+    Google Sheets Configuration.
+    """
+
+    spreadsheet_id: str
+    sheet_name: str
+
+
+# ==========================================================
+# STREAMLIT
+# ==========================================================
+
+@dataclass(frozen=True, slots=True)
+class StreamlitConfig:
+    """
+    Streamlit Application Configuration.
+    """
+
+    page_title: str = "SITAPEL PDPB 2026"
+
+    page_icon: str = "🗳️"
+
+    layout: str = "wide"
+
+    initial_sidebar_state: str = "expanded"
+
+
+# ==========================================================
+# GOOGLE SCOPES
+# ==========================================================
+
+GOOGLE_SCOPES: Final[tuple[str, ...]] = (
+
+    "openid",
+
+    "email",
+
+    "profile",
+
+    "https://www.googleapis.com/auth/drive.file",
+
     "https://www.googleapis.com/auth/spreadsheets",
+
+)
+
+
+# ==========================================================
+# LOAD GOOGLE
+# ==========================================================
+
+GOOGLE: Final = GoogleConfig(
+
+    client_id=st.secrets["google"]["client_id"],
+
+    client_secret=st.secrets["google"]["client_secret"],
+
+    redirect_uri=st.secrets["google"]["redirect_uri"],
+
+    scopes=tuple(st.secrets["google"]["scopes"]),
+
+)
+
+
+# ==========================================================
+# LOAD SUPABASE
+# ==========================================================
+
+SUPABASE: Final = SupabaseConfig(
+
+    url=st.secrets["supabase"]["url"],
+
+    key=st.secrets["supabase"]["key"],
+
+)
+
+
+# ==========================================================
+# LOAD CRYPTO
+# ==========================================================
+
+CRYPTO: Final = CryptoConfig(
+
+    fernet_key=st.secrets["crypto"]["fernet_key"],
+
+)
+
+
+# ==========================================================
+# LOAD GOOGLE DRIVE
+# ==========================================================
+
+DRIVE: Final = DriveConfig(
+
+    folder_id=st.secrets["drive"]["folder_id"],
+
+)
+
+
+# ==========================================================
+# LOAD GOOGLE SHEETS
+# ==========================================================
+
+SHEETS: Final = SheetsConfig(
+
+    spreadsheet_id=st.secrets["sheets"]["spreadsheet_id"],
+
+    sheet_name=st.secrets["sheets"]["sheet_name"],
+
+)
+
+
+# ==========================================================
+# LOAD STREAMLIT
+# ==========================================================
+
+STREAMLIT: Final = StreamlitConfig()
+
+
+# ==========================================================
+# EXPORT
+# ==========================================================
+
+__all__ = [
+
+    "APP_NAME",
+
+    "GOOGLE",
+
+    "SUPABASE",
+
+    "CRYPTO",
+
+    "DRIVE",
+
+    "SHEETS",
+
+    "STREAMLIT",
+
+    "GOOGLE_SCOPES",
+
 ]
-
-# ==========================================================
-# STATUS PERMOHONAN
-# ==========================================================
-
-STATUS_MENUNGGU = "MENUNGGU"
-STATUS_DIPROSES = "DIPROSES"
-STATUS_SELESAI = "SELESAI"
-STATUS_DITOLAK = "DITOLAK"
-
-STATUS_LIST = [
-    STATUS_MENUNGGU,
-    STATUS_DIPROSES,
-    STATUS_SELESAI,
-    STATUS_DITOLAK,
-]
-
-# ==========================================================
-# BATAS UKURAN FILE
-# ==========================================================
-
-MAX_FILE_SIZE_MB = 5
-
-MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
-
-# ==========================================================
-# FORMAT FILE YANG DIIZINKAN
-# ==========================================================
-
-ALLOWED_FILE_TYPES = [
-    "application/pdf",
-    "image/jpeg",
-    "image/png",
-]
-
-# ==========================================================
-# NAMA FILE DI GOOGLE DRIVE
-# ==========================================================
-
-FILE_KK = "KK.pdf"
-FILE_KTP = "KTP.pdf"
-FILE_PENDUKUNG = "DOKUMEN_PENDUKUNG.pdf"
-
-# ==========================================================
-# NOMOR PERMOHONAN
-# ==========================================================
-
-PREFIX_PERMOHONAN = "PDM"
-
-# ==========================================================
-# ESTIMASI LAYANAN
-# ==========================================================
-
-ESTIMASI_VERIFIKASI = "1 Hari Kerja"
-
-# ==========================================================
-# LINK GOOGLE DRIVE
-# ==========================================================
-
-DRIVE_FOLDER_URL = "https://drive.google.com/drive/folders/{}"
-
-# ==========================================================
-# SESSION STATE DEFAULT
-# ==========================================================
-
-DEFAULT_SESSION = {
-
-    "page": "dashboard",
-
-    "step": 1,
-
-    "nomor_permohonan": "",
-
-    "layanan": "",
-
-    "nama_pemohon": "",
-
-    "email": "",
-
-    "whatsapp": "",
-
-    "nama_diajukan": "",
-
-    "alamat_tujuan": "",
-
-    "alasan": "",
-
-    "alasan_lainnya": "",
-
-    "kk_file": None,
-
-    "ktp_file": None,
-
-    "dokumen_pendukung": None,
-
-    "persetujuan": False,
-}

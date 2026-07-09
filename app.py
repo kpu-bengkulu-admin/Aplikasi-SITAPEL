@@ -1,58 +1,202 @@
-from pathlib import Path
+# ==========================================================
+# SITAPEL PDPB 2026
+# app.py
+# CONTROLLER UTAMA
+# KOMISI PEMILIHAN UMUM KOTA BENGKULU
+# ==========================================================
+
+import os
 import streamlit as st
 
-from pages.dashboard import show_dashboard
-from pages.permohonan import show_permohonan
+from config import APP_NAME
 
+# ==========================================================
+# PAGE CONFIG
+# ==========================================================
 
-# ======================================================
-# CONFIG
-# ======================================================
 st.set_page_config(
-    page_title="SITAPEL | KPU Kota Bengkulu",
+
+    page_title=APP_NAME,
+
     page_icon="🗳️",
+
     layout="wide",
+
     initial_sidebar_state="collapsed"
+
 )
 
+# ==========================================================
+# LOAD CSS
+# ==========================================================
 
-# ======================================================
-# SESSION INIT
-# ======================================================
+CSS_FILE = "assets/style.css"
+
+if os.path.exists(CSS_FILE):
+
+    with open(CSS_FILE, encoding="utf-8") as css:
+
+        st.markdown(
+
+            f"<style>{css.read()}</style>",
+
+            unsafe_allow_html=True
+
+        )
+
+# ==========================================================
+# IMPORT HALAMAN
+# ==========================================================
+
+from views.dashboard import show_dashboard
+from views.permohonan import show_permohonan
+from views.success import show_success
+from views.cek_status import show_cek_status
+
+# admin akan dibuat setelah modul publik selesai
+# from views.admin import show_admin
+
+
+# ==========================================================
+# INIT SESSION
+# ==========================================================
 
 DEFAULT_SESSION = {
+
     "page": "dashboard",
+
     "step": 1,
-    "layanan": "",
+
+    "jenis_layanan": "",
+
+    "nomor_permohonan": "",
+
+    "status_permohonan": "",
+
+    "waktu_submit": "",
+
+    "nama_pemohon": "",
+
+    "whatsapp": "",
+
+    "email": "",
+
+    "nama_diajukan": "",
+
+    "anggota_keluarga": "",
+
+    "kecamatan": "",
+
+    "kelurahan": "",
+
+    "alamat_baru": "",
+
+    "kategori_tms": "",
+
+    "sudah_ktpel": "",
+
+    "keterangan_pemohon": ""
+
 }
 
 for key, value in DEFAULT_SESSION.items():
+
     if key not in st.session_state:
+
         st.session_state[key] = value
 
 
-# ======================================================
-# ROUTER
-# ======================================================
+# ==========================================================
+# JUDUL APLIKASI (HIDDEN)
+# ==========================================================
 
-if st.session_state.page == "dashboard":
+st.markdown(
+
+    """
+    <style>
+
+    #MainMenu {
+
+        visibility:hidden;
+
+    }
+
+    footer {
+
+        visibility:hidden;
+
+    }
+
+    header {
+
+        visibility:hidden;
+
+    }
+
+    </style>
+    """,
+
+    unsafe_allow_html=True
+
+)
+
+# ==========================================================
+# ROUTER APLIKASI
+# ==========================================================
+
+page = st.session_state.get(
+    "page",
+    "dashboard"
+)
+
+# ==========================================================
+# HALAMAN PUBLIK
+# ==========================================================
+
+if page == "dashboard":
+
     show_dashboard()
 
-elif st.session_state.page == "permohonan":
+elif page == "permohonan":
+
     show_permohonan()
 
+elif page == "success":
 
-# ======================================================
-# FOOTER
-# ======================================================
+    show_success()
 
-st.divider()
+elif page == "cek_status":
 
-st.markdown("""
-<center>
-<h3>🗳️ SITAPEL</h3>
-Sistem Informasi Pelayanan Pemutakhiran Data Pemilih
-<br>
-© 2026 KPU Kota Bengkulu
-</center>
-""", unsafe_allow_html=True)
+    show_cek_status()
+
+# ==========================================================
+# HALAMAN ADMIN
+# ==========================================================
+
+elif page == "admin":
+
+    st.info(
+        """
+Modul Admin sedang dalam tahap pengembangan.
+"""
+    )
+
+# ==========================================================
+# HALAMAN TIDAK DITEMUKAN
+# ==========================================================
+
+else:
+
+    st.error(
+        f"Halaman '{page}' tidak ditemukan."
+    )
+
+    if st.button(
+        "Kembali ke Dashboard",
+        use_container_width=True
+    ):
+
+        st.session_state.page = "dashboard"
+
+        st.rerun()
+

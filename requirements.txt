@@ -1,10 +1,23 @@
 streamlit
-gspread
+pandas
+python-dotenv
+
+# Google OAuth 2.0
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
+
+# Google API (Sheets & Drive)
 google-api-python-client
-pandas
-openpyxl
+gspread
+
+# Upload & file handling
 Pillow
-qrcode
+openpyxl
+
+# HTTP request / scraping (jika digunakan)
+requests
+beautifulsoup4
+
+# UI / utility
+streamlit-js-eval
