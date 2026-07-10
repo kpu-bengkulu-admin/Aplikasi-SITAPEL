@@ -163,38 +163,66 @@ def show_permohonan():
         """
 <style>
 
-.block-container{
+.block-container {
 
-    padding-top:1.5rem;
-    max-width:1150px;
-
-}
-
-.form-box{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:15px;
-
-    border:1px solid #E5E5E5;
-
-    margin-bottom:20px;
+    padding-top: 1.5rem;
+    max-width: 1150px;
 
 }
 
-.step-box{
+.form-box {
 
-    background:#F8F9FB;
+    background: white;
 
-    padding:15px;
+    padding: 25px;
 
-    border-left:6px solid #005BAC;
+    border-radius: 15px;
 
-    border-radius:10px;
+    border: 1px solid #E5E5E5;
 
-    margin-bottom:20px;
+    margin-bottom: 20px;
+
+}
+
+.step-box {
+
+    background: #F8F9FB;
+
+    padding: 15px;
+
+    border-left: 6px solid #005BAC;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+/* ======================================================
+   TOMBOL PRIMARY
+   ====================================================== */
+
+div.stButton > button[kind="primary"],
+div.stFormSubmitButton > button[kind="primary"] {
+
+    background: #8B001C !important;
+
+    color: white !important;
+
+    border: none !important;
+
+    border-radius: 12px !important;
+
+    font-weight: 700 !important;
+
+}
+
+div.stButton > button[kind="primary"]:hover,
+div.stFormSubmitButton > button[kind="primary"]:hover {
+
+    background: #700016 !important;
+
+    color: white !important;
 
 }
 
@@ -350,6 +378,7 @@ mengenai permohonan yang diajukan.
             if st.button(
                 "Selanjutnya ➜",
                 key="next_step1",
+                type="primary",
                 use_container_width=True
             ):
 
@@ -579,6 +608,7 @@ Kosongkan apabila hanya satu orang.
             if st.button(
                 "Selanjutnya ➜",
                 key="next_step2",
+                type="primary",
                 use_container_width=True
             ):
 
@@ -778,7 +808,8 @@ Kosongkan apabila hanya satu orang.
 
             if st.button(
                 "Selanjutnya ➜",
-                 key="next_step3",
+                key="next_step3",
+                type="primary",
                 use_container_width=True
             ):
 
