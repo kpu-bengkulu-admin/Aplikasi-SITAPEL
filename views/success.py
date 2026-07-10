@@ -7,6 +7,7 @@
 
 import streamlit as st
 
+from streamlit.components.v1 import html
 
 # ==========================================================
 # RESET SESSION PERMOHONAN
@@ -59,6 +60,15 @@ def reset_permohonan():
 # ==========================================================
 
 def show_success():
+
+    html(
+        """
+        <script>
+            window.parent.scrollTo(0, 0);
+        </script>
+        """,
+        height=0
+    )
 
     # ======================================================
     # VALIDASI SESSION
