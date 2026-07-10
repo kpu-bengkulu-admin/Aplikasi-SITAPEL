@@ -6,6 +6,7 @@
 
 import os
 import streamlit as st
+from providers.sheets import find_by
 
 
 # ==========================================================
@@ -675,79 +676,141 @@ yang tersedia.
     # CEK STATUS PERMOHONAN
     # ======================================================
 
-
     st.subheader(
         "🔎 Cek Status Permohonan"
     )
-
-
-
-    st.markdown(
-        """
-        <div style="
-            background:linear-gradient(
-                135deg,
-                #7A0019,
-                #4A0010
-            );
-            padding:30px;
-            border-radius:18px;
-            color:white;
-        ">
-
-        <h3 style="
-            color:white;
-            text-align:center;
-        ">
-        Pantau Proses Permohonan Anda
-        </h3>
-
-
-        <p style="
-            text-align:center;
-            color:#FFD700;
-        ">
-        Masukkan nomor permohonan SITAPEL
-        </p>
-
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-    st.write("")
-
-
 
     nomor = st.text_input(
         "Nomor Permohonan",
         placeholder="Contoh : SITAPEL-2026-000001"
     )
 
-
-
     if st.button(
-        "🔎 Cek Status",
+        "🔍 Cek Status",
+        type="primary",
         use_container_width=True
     ):
 
         if nomor.strip() == "":
 
             st.warning(
-                "Silakan masukkan Nomor Permohonan."
+                "Masukkan Nomor Permohonan terlebih dahulu."
             )
 
         else:
 
-            st.session_state["nomor_permohonan"] = nomor.strip()
+            with st.spinner(
+                "🔍 Sedang mencari data permohonan..."
+            ):
 
-            st.session_state["page"] = "cek_status"
+                st.session_state.hasil_cek = find_by(
+                    "Nomor Permohonan",
+                    nomor.strip()
+                )
 
-            st.rerun()
+    # ======================================================
+    # HASIL CEK STATUS
+    # ======================================================
 
+    if "hasil_cek" in st.session_state:
 
+        data = st.session_state.hasil_cek
+
+        if data is None:
+
+            st.error(
+                "Nomor Permohonan tidak ditemukan."
+            )
+
+        else:
+
+            status = data.get(
+                "Status",
+                "-"
+            )
+
+            warna_status = {
+                "Menunggu Verifikasi": "🔵",
+                "Sedang Diverifikasi": "🟡",
+                "Perlu Perbaikan": "🟠",
+                "Selesai": "🟢",
+                "Ditolak": "🔴"
+            }
+
+            icon = warna_status.get(
+                status,
+                "⚪"
+            )
+
+            st.success(
+                "Data permohonan ditemukan."
+            )
+
+            st.markdown(
+                f"""
+<div style="
+background:#ffffff;
+border:1px solid #dbeafe;
+border-left:6px solid #2563eb;
+border-radius:12px;
+padding:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin:15px 0;
+">
+
+<h4 style="margin-top:0;">
+📋 Status Permohonan
+</h4>
+
+<h3 style="color:#2563eb;">
+{icon} {status}
+</h3>
+
+<hr>
+
+<b>Nomor Permohonan</b><br>
+{data.get("Nomor Permohonan", "-")}
+
+<br><br>
+
+<b>Nama Pemohon</b><br>
+{data.get("Nama Pemohon", "-")}
+
+<br><br>
+
+<b>Jenis Layanan</b><br>
+{data.get("Jenis Layanan", "-")}
+
+<br><br>
+
+<b>Tanggal Pengajuan</b><br>
+{data.get("Tanggal", "-")}
+
+</div>
+""",
+                unsafe_allow_html=True
+            )
+
+            catatan = data.get(
+                "Catatan Petugas",
+                ""
+            )
+
+            st.markdown(
+                "#### 📝 Catatan Petugas"
+            )
+
+            if catatan:
+
+                st.info(
+                    catatan
+                )
+
+            else:
+
+                st.info(
+                    "Belum ada catatan dari petugas verifikator."
+                )
 
     st.write("")
 
