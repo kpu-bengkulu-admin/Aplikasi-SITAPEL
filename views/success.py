@@ -135,11 +135,54 @@ melakukan pengecekan status permohonan.
     # NOMOR PERMOHONAN
     # ======================================================
 
-    st.subheader("Nomor Permohonan")
+    st.markdown(
+        """
+## 📄 Nomor Permohonan Anda
+"""
+    )
 
-    st.code(
-        st.session_state.nomor_permohonan,
-        language=None
+    st.markdown(
+        f"""
+<div style="
+background:#f8fafc;
+border:3px solid #16a34a;
+border-radius:16px;
+padding:30px;
+text-align:center;
+margin-top:10px;
+margin-bottom:20px;
+">
+
+<div style="
+font-size:18px;
+color:#666;
+font-weight:600;
+">
+Simpan Nomor Permohonan Berikut
+</div>
+
+<div style="
+font-size:38px;
+font-weight:bold;
+color:#0f52ba;
+margin-top:15px;
+margin-bottom:15px;
+letter-spacing:2px;
+">
+{st.session_state.nomor_permohonan}
+</div>
+
+<div style="
+font-size:17px;
+color:#555;
+">
+⚠ Nomor ini digunakan untuk
+melakukan pengecekan status permohonan.
+</div>
+
+</div>
+""",
+        unsafe_allow_html=True
     )
 
     st.divider()
@@ -152,42 +195,50 @@ melakukan pengecekan status permohonan.
 
     with col1:
 
-        st.text_input(
-            "Status",
-            value=st.session_state.get(
-                "status_permohonan",
-                "Menunggu Verifikasi"
-            ),
-            disabled=True
+        st.info(
+            f"""
+**🟢 Status**
+
+{st.session_state.get(
+    "status_permohonan",
+    "Menunggu Verifikasi"
+)}
+"""
         )
 
-        st.text_input(
-            "Jenis Layanan",
-            value=st.session_state.get(
-                "jenis_layanan",
-                "-"
-            ),
-            disabled=True
+        st.info(
+            f"""
+**📂 Jenis Layanan**
+
+{st.session_state.get(
+    "jenis_layanan",
+    "-"
+)}
+"""
         )
 
     with col2:
 
-        st.text_input(
-            "Tanggal & Waktu Pengajuan",
-            value=st.session_state.get(
-                "waktu_submit",
-                "-"
-            ),
-            disabled=True
+        st.info(
+            f"""
+**📅 Waktu Pengajuan**
+
+{st.session_state.get(
+    "waktu_submit",
+    "-"
+)}
+"""
         )
 
-        st.text_input(
-            "Nomor WhatsApp",
-            value=st.session_state.get(
-                "whatsapp",
-                "-"
-            ),
-            disabled=True
+        st.info(
+            f"""
+**📱 Nomor WhatsApp**
+
+{st.session_state.get(
+    "whatsapp",
+    "-"
+)}
+"""
         )
 
     st.divider()
@@ -258,20 +309,44 @@ KPU Kota Bengkulu.
     # INFORMASI PENTING
     # ======================================================
 
-    st.warning(
+    st.markdown(
         """
-**Penting**
+<div style="
+background:#fff8db;
+border-left:8px solid #f59e0b;
+border-radius:12px;
+padding:20px;
+margin-top:10px;
+margin-bottom:20px;
+">
 
-Simpan Nomor Permohonan Anda.
+<h3 style="margin-top:0;color:#92400e;">
+⚠ Informasi Penting
+</h3>
+
+<p style="font-size:17px;margin-bottom:10px;">
+
+<b>Simpan Nomor Permohonan Anda.</b>
+
+</p>
+
+<p style="font-size:16px;line-height:1.8;">
 
 Nomor tersebut digunakan untuk:
 
-• Cek Status Permohonan
+<br>✅ Cek Status Permohonan
 
-• Perbaikan Dokumen
+<br>✅ Perbaikan Dokumen
 
-• Melihat Hasil Verifikasi
-"""
+<br>✅ Melihat Hasil Verifikasi
+
+<br>✅ Keperluan pelayanan di KPU Kota Bengkulu
+
+</p>
+
+</div>
+""",
+        unsafe_allow_html=True
     )
 
     st.divider()
