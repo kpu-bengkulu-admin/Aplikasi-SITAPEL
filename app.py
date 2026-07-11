@@ -99,7 +99,7 @@ DEFAULT_SESSION = {
 
     "sudah_ktpel": "",
 
-    "keterangan_pemohon": ""
+    "keterangan_pemohon": "",
 
     "detail_permohonan": None,
 
@@ -177,6 +177,7 @@ elif page == "cek_status":
 
     show_cek_status()
 
+
 # ==========================================================
 # LOGIN ADMIN
 # ==========================================================
@@ -192,6 +193,7 @@ elif page == "login_admin":
 elif page == "admin":
 
     show_admin()
+
 
 # ==========================================================
 # HALAMAN TIDAK DITEMUKAN

@@ -815,6 +815,28 @@ margin:15px 0;
     st.write("")
 
 
+    # ======================================================
+    # LOGIN ADMIN
+    # ======================================================
+
+    st.write("")
+
+    st.divider()
+
+    col1, col2, col3 = st.columns(
+        [3, 1, 3]
+    )
+
+    with col2:
+
+        if st.button(
+            "🔐 Login Admin",
+            use_container_width=True
+        ):
+
+            st.session_state.page = "login_admin"
+
+            st.rerun()
 
     # ======================================================
     # FOOTER

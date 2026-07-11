@@ -350,8 +350,6 @@ Nomor tersebut digunakan untuk:
 
 <br>✅ Melihat Hasil Verifikasi
 
-<br>✅ Keperluan pelayanan di KPU Kota Bengkulu
-
 </p>
 
 </div>
@@ -370,15 +368,15 @@ Nomor tersebut digunakan untuk:
 ### Informasi
 
 Apabila mengalami kendala,
-silakan menghubungi:
+silakan menghubungi CS Pelayanan :
 
 **Komisi Pemilihan Umum Kota Bengkulu**
 
-📍 Jl. WR. Supratman No. 01 Kota Bengkulu
+📍 Jl. WR. Supratman No. 08 Kota Bengkulu
 
-☎️ (0736) XXXXXXX
+☎️ 089530256359
 
-📧 kotabengkulu@kpu.go.id
+📧 kpukotabengkulu@gmail.com
 """
     )
 
@@ -396,7 +394,7 @@ silakan menghubungi:
 
 <br>
 
-Sistem Informasi Pelayanan Data Pemilih
+Sistem Informasi Pelayanan Pemutakhiran Data Pemilih
 secara Berkelanjutan
 
 <br><br>

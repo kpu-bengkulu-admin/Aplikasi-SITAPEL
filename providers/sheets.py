@@ -272,6 +272,78 @@ def update_row(
 
     return True
 
+# ==========================================================
+# UPDATE STATUS PERMOHONAN
+# ==========================================================
+
+def update_status_permohonan(
+    nomor_permohonan: str,
+    status: str,
+    catatan_admin: str = "",
+    link_surat: str = ""
+) -> bool:
+    """
+    Memperbarui status permohonan
+    berdasarkan Nomor Permohonan.
+    """
+
+    row_number = find_row_number(
+        "Nomor Permohonan",
+        nomor_permohonan
+    )
+
+    if row_number is None:
+
+        return False
+
+    record = find_by(
+        "Nomor Permohonan",
+        nomor_permohonan
+    )
+
+    if record is None:
+
+        return False
+
+    values = [
+
+        record.get("ID", ""),
+        record.get("Nomor Permohonan", ""),
+        record.get("Tanggal", ""),
+        record.get("Jam", ""),
+        record.get("Tahun", ""),
+        record.get("Bulan", ""),
+
+        # Status baru
+        status,
+
+        record.get("Jenis Layanan", ""),
+        record.get("Nama Pemohon", ""),
+        record.get("WhatsApp", ""),
+        record.get("Email", ""),
+        record.get("Nama Diajukan", ""),
+        record.get("Anggota Keluarga", ""),
+        record.get("Kecamatan", ""),
+        record.get("Kelurahan", ""),
+        record.get("Alamat Baru", ""),
+        record.get("Kategori TMS", ""),
+        record.get("Sudah Memiliki KTP-el", ""),
+        record.get("Keterangan Pemohon", ""),
+
+        # Kolom Admin
+        catatan_admin,
+        datetime.now().strftime("%d-%m-%Y %H:%M"),
+        link_surat,
+
+        record.get("Link Folder Drive", "")
+
+    ]
+
+    return update_row(
+        row_number,
+        values
+    )
+
 
 # ==========================================================
 # DELETE ROW
@@ -618,9 +690,9 @@ def simpan_permohonan(data: dict) -> bool:
         data["Kategori TMS"],
         data["Sudah Memiliki KTP-el"],
         data["Keterangan Pemohon"],
-        "",
-        "",
-        "",
+        data["Catatan Admin"],
+        data["Tanggal Verifikasi"],
+        data["Link Surat"],
         data["Link Folder Drive"]
 
     ]
