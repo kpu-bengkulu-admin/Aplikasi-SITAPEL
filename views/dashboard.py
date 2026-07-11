@@ -143,9 +143,9 @@ def show_dashboard():
                 #4A0010
             );
             padding:35px;
-            border-radius:18px;
+            border-radius:10px;
             color:white;
-            margin-bottom:25px;
+            margin-bottom:15px;
         ">
 
         <h2 style="
