@@ -21,3 +21,5 @@ beautifulsoup4
 
 # UI / utility
 streamlit-js-eval
+
+bcrypt
