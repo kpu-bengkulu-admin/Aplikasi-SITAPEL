@@ -373,7 +373,23 @@ mengenai permohonan yang diajukan.
 
         kosong, next_col = st.columns([6, 2])
 
-        with next_col:
+        col_back, col_next = st.columns(2)
+
+        with col_back:
+
+            if st.button(
+                "⬅ Kembali ke Dashboard",
+                key="back_dashboard",
+                use_container_width=True
+            ):
+
+                st.session_state.page = "dashboard"
+
+                st.session_state.step = 1
+
+                st.rerun()
+
+        with col_next:
 
             if st.button(
                 "Selanjutnya ➜",
@@ -421,21 +437,67 @@ mengenai permohonan yang diajukan.
 
         st.subheader("Data Permohonan")
 
-        nama_diajukan = st.text_input(
-            "Nama yang Diajukan *",
-            value=st.session_state.get(
-                "nama_diajukan",
-                ""
-            )
+        kecamatan = st.session_state.get("kecamatan", "")
+        kelurahan = st.session_state.get("kelurahan", "")
+        alamat_baru = st.session_state.get("alamat_baru", "")
+        kategori_tms = st.session_state.get("kategori_tms", "")
+        sudah_ktpel = st.session_state.get("sudah_ktpel", "")
+        anggota_keluarga = st.session_state.get(
+            "anggota_keluarga",
+            ""
         )
 
-        anggota_keluarga = st.text_area(
-            "Anggota Keluarga",
-            value=st.session_state.get(
-                "anggota_keluarga",
-                ""
-            ),
-            placeholder="""
+        # =====================================================
+        # TMS
+        # =====================================================
+
+        if jenis_layanan == "Pemilih Tidak Memenuhi Syarat (TMS)":
+
+            kategori_list = [
+                "",
+                "Meninggal Dunia",
+                "Menjadi Anggota TNI",
+                "Menjadi Anggota POLRI"
+            ]
+
+            kategori_tms = st.selectbox(
+                "Kategori TMS *",
+                kategori_list,
+                index=(
+                    kategori_list.index(kategori_tms)
+                    if kategori_tms in kategori_list
+                    else 0
+                )
+            )
+
+            st.divider()
+
+            nama_diajukan = st.text_input(
+                "Nama yang Diajukan *",
+                value=st.session_state.get(
+                    "nama_diajukan",
+                    ""
+                )
+            )
+
+        # =====================================================
+        # PINDAH DOMISILI & PEMILIH BARU
+        # =====================================================
+
+        else:
+
+            nama_diajukan = st.text_input(
+                "Nama yang Diajukan *",
+                value=st.session_state.get(
+                    "nama_diajukan",
+                    ""
+                )
+            )
+
+            anggota_keluarga = st.text_area(
+                "Anggota Keluarga",
+                value=anggota_keluarga,
+                placeholder="""
 Contoh :
 
 1. Ahmad
@@ -444,13 +506,7 @@ Contoh :
 
 Kosongkan apabila hanya satu orang.
 """
-        )
-
-        kecamatan = st.session_state.get("kecamatan", "")
-        kelurahan = st.session_state.get("kelurahan", "")
-        alamat_baru = st.session_state.get("alamat_baru", "")
-        kategori_tms = st.session_state.get("kategori_tms", "")
-        sudah_ktpel = st.session_state.get("sudah_ktpel", "")
+            )
 
         # =====================================================
         # PINDAH DOMISILI
@@ -460,7 +516,7 @@ Kosongkan apabila hanya satu orang.
 
             st.divider()
 
-            st.markdown("##### Tujuan Domisili")
+            st.markdown("##### Tujuan Domisili/Tempat Tinggal")
 
             col1, col2 = st.columns(2)
 
@@ -558,31 +614,6 @@ Kosongkan apabila hanya satu orang.
                         disabled=True
                     )
 
-        # =====================================================
-        # TMS
-        # =====================================================
-
-        elif jenis_layanan == "Pemilih Tidak Memenuhi Syarat (TMS)":
-
-            st.divider()
-
-            kategori_list = [
-                "",
-                "Meninggal Dunia",
-                "Menjadi Anggota TNI",
-                "Menjadi Anggota POLRI"
-            ]
-
-            kategori_tms = st.selectbox(
-                "Kategori TMS",
-                kategori_list,
-                index=(
-                    kategori_list.index(kategori_tms)
-                    if kategori_tms in kategori_list
-                    else 0
-                )
-            )
-
         st.markdown(
             "</div>",
             unsafe_allow_html=True
@@ -621,7 +652,15 @@ Kosongkan apabila hanya satu orang.
                 else:
 
                     st.session_state.nama_diajukan = nama_diajukan
-                    st.session_state.anggota_keluarga = anggota_keluarga
+
+                    if jenis_layanan == "Pemilih Tidak Memenuhi Syarat (TMS)":
+
+                        st.session_state.anggota_keluarga = ""
+
+                    else:
+
+                        st.session_state.anggota_keluarga = anggota_keluarga
+
                     st.session_state.kecamatan = kecamatan
                     st.session_state.kelurahan = kelurahan
                     st.session_state.alamat_baru = alamat_baru
@@ -758,19 +797,19 @@ Kosongkan apabila hanya satu orang.
             if st.session_state.kategori_tms == "Meninggal Dunia":
 
                 label_pendukung = (
-                    "Upload Surat Keterangan Kematian"
+                    "Upload Akta Kematian/Surat Keterangan Kematian dari Kelurahan"
                 )
 
             elif st.session_state.kategori_tms == "Menjadi Anggota TNI":
 
                 label_pendukung = (
-                    "Upload SK / Bukti Menjadi Anggota TNI"
+                    "Upload SK / KTA / Bukti Menjadi Anggota TNI"
                 )
 
             elif st.session_state.kategori_tms == "Menjadi Anggota POLRI":
 
                 label_pendukung = (
-                    "Upload SK / Bukti Menjadi Anggota POLRI"
+                    "Upload SK / KTA / Bukti Menjadi Anggota POLRI"
                 )
 
         upload_pendukung = st.file_uploader(
