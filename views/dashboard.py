@@ -142,8 +142,8 @@ def show_dashboard():
                 #7A0019,
                 #4A0010
             );
-            padding:35px;
-            border-radius:10px;
+            padding:10px;
+            border-radius:18px;
             color:white;
             margin-bottom:15px;
         ">
@@ -243,10 +243,10 @@ def show_dashboard():
                 <div style="
                     background:#ffffff;
                     border:2px solid #D4AF37;
-                    border-radius:15px;
-                    padding:15px;
+                    border-radius:5px;
+                    padding:5px;
                     text-align:center;
-                    min-height:150px;
+                    min-height:80px;
                 ">
 
 
