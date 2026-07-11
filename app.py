@@ -53,8 +53,8 @@ from views.permohonan import show_permohonan
 from views.success import show_success
 from views.cek_status import show_cek_status
 
-# admin akan dibuat setelah modul publik selesai
-# from views.admin import show_admin
+from views.login_admin import show_login_admin
+from views.admin import show_admin
 
 
 # ==========================================================
@@ -64,6 +64,10 @@ from views.cek_status import show_cek_status
 DEFAULT_SESSION = {
 
     "page": "dashboard",
+
+    "admin_login": False,
+
+    "admin_nama": "",
 
     "step": 1,
 
@@ -96,6 +100,10 @@ DEFAULT_SESSION = {
     "sudah_ktpel": "",
 
     "keterangan_pemohon": ""
+
+    "detail_permohonan": None,
+
+    "tolak_permohonan": False,
 
 }
 
@@ -170,16 +178,20 @@ elif page == "cek_status":
     show_cek_status()
 
 # ==========================================================
+# LOGIN ADMIN
+# ==========================================================
+
+elif page == "login_admin":
+
+    show_login_admin()
+
+# ==========================================================
 # HALAMAN ADMIN
 # ==========================================================
 
 elif page == "admin":
 
-    st.info(
-        """
-Modul Admin sedang dalam tahap pengembangan.
-"""
-    )
+    show_admin()
 
 # ==========================================================
 # HALAMAN TIDAK DITEMUKAN
