@@ -198,24 +198,74 @@ def show_admin():
         st.divider()
 
         st.subheader(
-            "Statistik Permohonan"
+            "Ringkasan Status Permohonan"
         )
 
-        st.info(
-            """
-Dashboard statistik sudah aktif.
+        persen_selesai = (
+            round(
+                (selesai / total_permohonan) * 100,
+                1
+            )
+            if total_permohonan > 0
+            else 0
+        )
 
-Pada Bagian 2 akan ditambahkan:
+        persen_diproses = (
+            round(
+                (diproses / total_permohonan) * 100,
+                1
+            )
+            if total_permohonan > 0
+            else 0
+        )
 
-• Pencarian
+        persen_ditolak = (
+            round(
+                (ditolak / total_permohonan) * 100,
+                1
+            )
+            if total_permohonan > 0
+            else 0
+        )
 
-• Filter Status
+        col_a, col_b = st.columns(
+            2
+        )
 
-• Tabel Data Permohonan
+        with col_a:
 
-• Tombol Detail
+            st.progress(
+                persen_selesai / 100,
+                text=f"Penyelesaian Permohonan ({persen_selesai}%)"
+            )
+
+            st.progress(
+                persen_diproses / 100,
+                text=f"Sedang Diproses ({persen_diproses}%)"
+            )
+
+        with col_b:
+
+            st.progress(
+                persen_ditolak / 100,
+                text=f"Permohonan Ditolak ({persen_ditolak}%)"
+            )
+
+            st.info(
+                f"""
+**Informasi Dashboard**
+
+• Total Permohonan : **{total_permohonan}**
+
+• Menunggu : **{menunggu}**
+
+• Diproses : **{diproses}**
+
+• Selesai : **{selesai}**
+
+• Ditolak : **{ditolak}**
 """
-        )
+            )
 
     # ======================================================
     # DATA PERMOHONAN
@@ -346,11 +396,19 @@ Pada Bagian 2 akan ditambahkan:
 
                         st.markdown(
                             f"""
-**{index}. {item.get("Nama Pemohon","")}**
+### {index}. {item.get("Nama Pemohon","")}
 
-Nomor : {item.get("Nomor Permohonan","")}
+**Nomor Permohonan**
 
-Layanan : {item.get("Jenis Layanan","")}
+{item.get("Nomor Permohonan","")}
+
+**Jenis Layanan**
+
+{item.get("Jenis Layanan","")}
+
+**Tanggal**
+
+{item.get("Tanggal","")}
 """
                         )
 
@@ -358,23 +416,35 @@ Layanan : {item.get("Jenis Layanan","")}
 
                         st.write("")
 
-                        st.write(
-                            f"**{item.get('Status','')}**"
+                        status = item.get(
+                            "Status",
+                            ""
                         )
 
-                    with col3:
+                        warna = {
 
-                        if st.button(
-                            "Lihat Detail",
-                            key=f"lihat_{index}",
-                            use_container_width=True
-                        ):
+                            "Menunggu": "🟡",
 
-                            st.session_state.detail_permohonan = item
+                            "Diproses": "🔵",
 
-                            st.session_state.admin_menu = "detail"
+                            "Diverifikasi": "🟢",
 
-                            st.rerun()
+                            "Selesai": "✅",
+
+                            "Ditolak": "🔴"
+
+                        }.get(
+                            status,
+                            "⚪"
+                        )
+
+                        st.markdown(
+                            f"""
+### {warna}
+
+**{status}**
+"""
+                        )
 
         # ==================================================
         # DETAIL PERMOHONAN
@@ -489,23 +559,199 @@ Layanan : {item.get("Jenis Layanan","")}
                 height=120
             )
 
+            # ==============================================
+            # INFORMASI TAMBAHAN
+            # ==============================================
+
+            st.divider()
+
+            st.subheader(
+                "Informasi Permohonan"
+            )
+
+            col_info1, col_info2 = st.columns(2)
+
+            with col_info1:
+
+                st.text_input(
+                    "Tanggal Pengajuan",
+                    detail.get(
+                        "Tanggal",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Jam Pengajuan",
+                    detail.get(
+                        "Jam",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Tahun",
+                    detail.get(
+                        "Tahun",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Bulan",
+                    detail.get(
+                        "Bulan",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+            with col_info2:
+
+                st.text_input(
+                    "Anggota Keluarga",
+                    detail.get(
+                        "Anggota Keluarga",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Kategori TMS",
+                    detail.get(
+                        "Kategori TMS",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Sudah Memiliki KTP-el",
+                    detail.get(
+                        "Sudah Memiliki KTP-el",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+                st.text_input(
+                    "Tanggal Verifikasi",
+                    detail.get(
+                        "Tanggal Verifikasi",
+                        ""
+                    ),
+                    disabled=True
+                )
+
+            st.text_area(
+                "Alamat Baru",
+                detail.get(
+                    "Alamat Baru",
+                    ""
+                ),
+                disabled=True,
+                height=80
+            )
+
+            st.text_area(
+                "Catatan Admin",
+                detail.get(
+                    "Catatan Admin",
+                    ""
+                ),
+                disabled=True,
+                height=100
+            )
+
+            # ==============================================
+            # DOKUMEN PERMOHONAN
+            # ==============================================
+
+            st.divider()
+
+            st.subheader(
+                "Dokumen Permohonan"
+            )
+
+            col_doc1, col_doc2 = st.columns(2)
+
+            with col_doc1:
+
+                if detail.get(
+                    "Link Folder Drive"
+                ):
+
+                    st.link_button(
+                        "📂 Buka Folder Drive",
+                        detail.get(
+                            "Link Folder Drive"
+                        ),
+                        use_container_width=True
+                    )
+
+            with col_doc2:
+
+                if detail.get(
+                    "Link Surat"
+                ):
+
+                    st.link_button(
+                        "📄 Lihat Surat Balasan",
+                        detail.get(
+                            "Link Surat"
+                        ),
+                        use_container_width=True
+                    )
+
             col1, col2, col3 = st.columns(3)
 
             with col1:
 
-                st.button(
+                if st.button(
                     "✔ Verifikasi",
-                    disabled=True,
+                    type="primary",
                     use_container_width=True
-                )
+                ):
+
+                    berhasil = update_status_permohonan(
+
+                        detail.get(
+                            "Nomor Permohonan",
+                            ""
+                        ),
+
+                        "Diverifikasi"
+
+                    )
+
+                    if berhasil:
+
+                        st.success(
+                            "Permohonan berhasil diverifikasi."
+                        )
+
+                        del st.session_state.detail_permohonan
+
+                        st.rerun()
+
+                    else:
+
+                        st.error(
+                            "Gagal memperbarui status."
+                        )
 
             with col2:
 
-                st.button(
+                if st.button(
                     "❌ Tolak",
-                    disabled=True,
                     use_container_width=True
-                )
+                ):
+
+                    st.session_state.tolak_permohonan = True
 
             with col3:
 
@@ -518,5 +764,80 @@ Layanan : {item.get("Jenis Layanan","")}
 
                     st.rerun()
 
+            # ==============================================
+            # FORM PENOLAKAN
+            # ==============================================
 
+            if st.session_state.tolak_permohonan:
+
+                st.divider()
+
+                st.warning(
+                    "Permohonan akan ditolak."
+                )
+
+                catatan = st.text_area(
+                    "Alasan Penolakan",
+                    placeholder="Tuliskan alasan penolakan..."
+                )
+
+                col_batal, col_simpan = st.columns(2)
+
+                with col_batal:
+
+                    if st.button(
+                        "Batal",
+                        use_container_width=True
+                    ):
+
+                        st.session_state.tolak_permohonan = False
+
+                        st.rerun()
+
+                with col_simpan:
+
+                    if st.button(
+                        "Simpan Penolakan",
+                        type="primary",
+                        use_container_width=True
+                    ):
+
+                        if catatan.strip() == "":
+
+                            st.error(
+                                "Alasan penolakan wajib diisi."
+                            )
+
+                        else:
+
+                            berhasil = update_status_permohonan(
+
+                                detail.get(
+                                    "Nomor Permohonan",
+                                    ""
+                                ),
+
+                                "Ditolak",
+
+                                catatan
+
+                            )
+
+                            if berhasil:
+
+                                st.success(
+                                    "Permohonan berhasil ditolak."
+                                )
+
+                                st.session_state.tolak_permohonan = False
+
+                                del st.session_state.detail_permohonan
+
+                                st.rerun()
+
+                            else:
+
+                                st.error(
+                                    "Gagal memperbarui status."
+                                )
 
