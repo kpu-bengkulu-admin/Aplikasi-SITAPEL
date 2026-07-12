@@ -280,7 +280,6 @@ def update_status_permohonan(
     nomor_permohonan: str,
     status: str,
     catatan_admin: str = "",
-    link_surat: str = ""
 ) -> bool:
     """
     Memperbarui status permohonan
@@ -330,10 +329,23 @@ def update_status_permohonan(
         record.get("Sudah Memiliki KTP-el", ""),
         record.get("Keterangan Pemohon", ""),
 
-        # Kolom Admin
-        catatan_admin,
-        datetime.now().strftime("%d-%m-%Y %H:%M"),
-        link_surat,
+        # ==================================================
+        # KOLOM ADMIN
+        # ==================================================
+
+        catatan_admin
+        if catatan_admin
+        else (
+            "Permohonan Anda telah diverifikasi dan diterima oleh KPU Kota Bengkulu. "
+            "Data Anda telah diproses dan dimasukkan ke dalam basis data pemilih. "
+            "Silakan melakukan pengecekan secara berkala melalui https://cekdptonline.kpu.go.id/"
+            if status == "Selesai"
+            else ""
+        ),
+
+        datetime.now().strftime("%d-%m-%Y %H:%M")
+        if status == "Selesai"
+        else "",
 
         record.get("Link Folder Drive", "")
 
@@ -692,7 +704,6 @@ def simpan_permohonan(data: dict) -> bool:
         data["Keterangan Pemohon"],
         data["Catatan Admin"],
         data["Tanggal Verifikasi"],
-        data["Link Surat"],
         data["Link Folder Drive"]
 
     ]

@@ -77,15 +77,6 @@ def show_admin():
         ) == "Menunggu"
     )
 
-    diproses = sum(
-        1
-        for item in data
-        if item.get(
-            "Status",
-            ""
-        ) == "Diproses"
-    )
-
     selesai = sum(
         1
         for item in data
@@ -124,7 +115,7 @@ def show_admin():
 
     menu = st.radio(
 
-        "",
+        "Menu",
 
         [
 
@@ -158,7 +149,7 @@ def show_admin():
 
     if menu == "📊 Dashboard":
 
-        col1, col2, col3, col4, col5 = st.columns(5)
+        col1, col2, col3, col4 = st.columns(4)
 
         with col1:
 
@@ -177,18 +168,11 @@ def show_admin():
         with col3:
 
             st.metric(
-                "Diproses",
-                diproses
-            )
-
-        with col4:
-
-            st.metric(
                 "Selesai",
                 selesai
             )
 
-        with col5:
+        with col4:
 
             st.metric(
                 "Ditolak",
@@ -204,15 +188,6 @@ def show_admin():
         persen_selesai = (
             round(
                 (selesai / total_permohonan) * 100,
-                1
-            )
-            if total_permohonan > 0
-            else 0
-        )
-
-        persen_diproses = (
-            round(
-                (diproses / total_permohonan) * 100,
                 1
             )
             if total_permohonan > 0
@@ -236,12 +211,7 @@ def show_admin():
 
             st.progress(
                 persen_selesai / 100,
-                text=f"Penyelesaian Permohonan ({persen_selesai}%)"
-            )
-
-            st.progress(
-                persen_diproses / 100,
-                text=f"Sedang Diproses ({persen_diproses}%)"
+                text=f"Permohonan Selesai ({persen_selesai}%)"
             )
 
         with col_b:
@@ -258,8 +228,6 @@ def show_admin():
 • Total Permohonan : **{total_permohonan}**
 
 • Menunggu : **{menunggu}**
-
-• Diproses : **{diproses}**
 
 • Selesai : **{selesai}**
 
@@ -301,7 +269,6 @@ def show_admin():
                 [
                     "Semua",
                     "Menunggu",
-                    "Diproses",
                     "Selesai",
                     "Ditolak"
                 ]
@@ -425,11 +392,7 @@ def show_admin():
 
                             "Menunggu": "🟡",
 
-                            "Diproses": "🔵",
-
-                            "Diverifikasi": "🟢",
-
-                            "Selesai": "✅",
+                            "Selesai": "🟢",
 
                             "Ditolak": "🔴"
 
@@ -445,6 +408,22 @@ def show_admin():
 **{status}**
 """
                         )
+
+                    with col3:
+
+                        st.write("")
+
+                        st.write("")
+
+                        if st.button(
+                            "👁 Lihat Detail",
+                            key=f"detail_{index}",
+                            use_container_width=True
+                        ):
+
+                            st.session_state.detail_permohonan = item
+
+                            st.rerun()
 
         # ==================================================
         # DETAIL PERMOHONAN
@@ -677,42 +656,26 @@ def show_admin():
                 "Dokumen Permohonan"
             )
 
-            col_doc1, col_doc2 = st.columns(2)
+            if detail.get(
+                "Link Folder Drive"
+            ):
 
-            with col_doc1:
+                st.link_button(
+                    "📂 Buka Folder Dokumen",
+                    detail.get(
+                        "Link Folder Drive"
+                    ),
+                    use_container_width=True
+                )
 
-                if detail.get(
-                    "Link Folder Drive"
-                ):
-
-                    st.link_button(
-                        "📂 Buka Folder Drive",
-                        detail.get(
-                            "Link Folder Drive"
-                        ),
-                        use_container_width=True
-                    )
-
-            with col_doc2:
-
-                if detail.get(
-                    "Link Surat"
-                ):
-
-                    st.link_button(
-                        "📄 Lihat Surat Balasan",
-                        detail.get(
-                            "Link Surat"
-                        ),
-                        use_container_width=True
-                    )
+            st.divider()
 
             col1, col2, col3 = st.columns(3)
 
             with col1:
 
                 if st.button(
-                    "✔ Verifikasi",
+                    "✔ Verifikasi & Selesaikan",
                     type="primary",
                     use_container_width=True
                 ):
@@ -724,14 +687,14 @@ def show_admin():
                             ""
                         ),
 
-                        "Diverifikasi"
+                        "Selesai"
 
                     )
 
                     if berhasil:
 
                         st.success(
-                            "Permohonan berhasil diverifikasi."
+                            "Permohonan berhasil diverifikasi dan diselesaikan."
                         )
 
                         del st.session_state.detail_permohonan
