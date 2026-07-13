@@ -565,7 +565,7 @@ Kosongkan apabila hanya satu orang.
         # PEMILIH BARU
         # =====================================================
 
-        elif jenis_layanan == "Pemilih Baru/Belum Terdaftar Dalam DPT":
+        elif jenis_layanan == "Pemilih Baru/Belum Terdaftar Dalam Data Pemilih":
 
             st.divider()
 
@@ -701,7 +701,7 @@ Kosongkan apabila hanya satu orang.
 """
             )
 
-        elif jenis_layanan == "Pemilih Baru/Belum Terdaftar Dalam DPT":
+        elif jenis_layanan == "Pemilih Baru/Belum Terdaftar Dalam Data Pemilih":
 
             st.info(
                 """
@@ -773,8 +773,18 @@ Kosongkan apabila hanya satu orang.
         yang berwenang sesuai ketentuan peraturan perundang-undangan.
         """)
 
+        st.markdown(
+            """
+            <p style="font-size:18px; font-weight:700; margin-bottom:0;">
+            Saya telah membaca dan menyetujui penggunaan data pribadi saya
+            untuk keperluan pelayanan Pemutakhiran Data Pemilih Berkelanjutan (PDPB).
+            </p>
+            """,
+            unsafe_allow_html=True,
+        )
+
         persetujuan = st.checkbox(
-            "Saya telah membaca dan menyetujui penggunaan data pribadi saya untuk keperluan pelayanan Pemutakhiran Data Oemilih Berkelanjutan."
+            "Saya menyetujui."
         )
 
         if not persetujuan:

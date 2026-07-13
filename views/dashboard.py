@@ -427,7 +427,7 @@ yang tersedia.
             ">
             Pelayanan bagi pemilih pemula,
             pemilih yang belum terdaftar
-            dalam DPT, serta pensiunan
+            dalam Data Pemilih Kota bengkulu, serta pensiunan
             TNI/POLRI.
             </p>
 
@@ -497,10 +497,10 @@ yang tersedia.
                 text-align:center;
                 color:#555;
             ">
-            Pelayanan untuk pemilih
-            yang sudah tidak memenuhi
-            syarat seperti meninggal dunia,
-            TNI, atau POLRI.
+            Pelayanan untuk pemilih yang terdaftar dalam Data Pemilih 
+            namun sudah tidak memenuhi
+            syarat (TMS) seperti meninggal dunia,
+            Menjadi TNI, atau POLRI.
             </p>
 
 
@@ -620,7 +620,7 @@ yang tersedia.
 
 
     with st.expander(
-        "🆕 Pemilih Baru / Belum Terdaftar Dalam DPT"
+        "🆕 Pemilih Baru / Belum Terdaftar Dalam Data Pemilih"
     ):
 
         st.markdown(
@@ -635,7 +635,7 @@ yang tersedia.
     ### Kategori
 
     - Pemilih Pemula
-    - Belum terdaftar dalam DPT
+    - Belum terdaftar dalam Data Pemilih
     - Pensiunan TNI
     - Pensiunan POLRI
     """
