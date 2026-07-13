@@ -731,8 +731,6 @@ yang tersedia.
 
             warna_status = {
                 "Menunggu Verifikasi": "🔵",
-                "Sedang Diverifikasi": "🟡",
-                "Perlu Perbaikan": "🟠",
                 "Selesai": "🟢",
                 "Ditolak": "🔴"
             }
@@ -792,12 +790,12 @@ margin:15px 0;
             )
 
             catatan = data.get(
-                "Catatan Petugas",
+                "Catatan Admin",
                 ""
             )
 
             st.markdown(
-                "#### 📝 Catatan Petugas"
+                "#### 📝 Catatan Admin"
             )
 
             if catatan:

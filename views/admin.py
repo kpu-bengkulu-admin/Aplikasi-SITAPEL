@@ -68,13 +68,13 @@ def show_admin():
 
     total_permohonan = len(data)
 
-    menunggu = sum(
+    menunggu_verifikasi = sum(
         1
         for item in data
         if item.get(
             "Status",
             ""
-        ) == "Menunggu"
+        ) == "Menunggu Verifikasi"
     )
 
     selesai = sum(
@@ -161,8 +161,8 @@ def show_admin():
         with col2:
 
             st.metric(
-                "Menunggu",
-                menunggu
+                "Menunggu Verifikasi",
+                menunggu_verifikasi
             )
 
         with col3:
@@ -227,7 +227,7 @@ def show_admin():
 
 • Total Permohonan : **{total_permohonan}**
 
-• Menunggu : **{menunggu}**
+• Menunggu Verifikasi : **{menunggu_verifikasi}**
 
 • Selesai : **{selesai}**
 
@@ -268,7 +268,7 @@ def show_admin():
                 "Filter Status",
                 [
                     "Semua",
-                    "Menunggu",
+                    "Menunggu Verifikasi",
                     "Selesai",
                     "Ditolak"
                 ]
@@ -390,7 +390,7 @@ def show_admin():
 
                         warna = {
 
-                            "Menunggu": "🟡",
+                            "Menunggu Verifikasi": "🟡",
 
                             "Selesai": "🟢",
 

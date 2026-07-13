@@ -702,8 +702,15 @@ def simpan_permohonan(data: dict) -> bool:
         data["Kategori TMS"],
         data["Sudah Memiliki KTP-el"],
         data["Keterangan Pemohon"],
-        data["Catatan Admin"],
-        data["Tanggal Verifikasi"],
+        data.get(
+            "Catatan Admin",
+            ""
+        ),
+
+        data.get(
+            "Tanggal Verifikasi",
+            ""
+        ),
         data["Link Folder Drive"]
 
     ]
