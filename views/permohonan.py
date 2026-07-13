@@ -758,6 +758,31 @@ Kosongkan apabila hanya satu orang.
 
         st.divider()
 
+        # ==========================================================
+        # PERSETUJUAN PENGGUNAAN DATA PRIBADI
+        # ==========================================================
+
+        st.info("""
+        ### Persetujuan Penggunaan Data Pribadi
+
+        Dokumen yang Anda unggah (KTP-el, Kartu Keluarga, dan dokumen pendukung)
+        akan digunakan oleh KPU Kota Bengkulu hanya untuk keperluan
+        pelayanan Pemutakhiran Data Pemilih Berkelanjutan (PDPB).
+
+        Dokumen disimpan secara aman dan hanya dapat diakses oleh petugas
+        yang berwenang sesuai ketentuan peraturan perundang-undangan.
+        """)
+
+        persetujuan = st.checkbox(
+            "Saya telah membaca dan menyetujui penggunaan data pribadi saya untuk keperluan pelayanan Pemutakhiran Data Oemilih Berkelanjutan."
+        )
+
+        if not persetujuan:
+            st.warning(
+                "Anda harus menyetujui penggunaan data pribadi terlebih dahulu."
+            )
+            st.stop()
+
         # ======================================================
         # UPLOAD KTP
         # ======================================================
