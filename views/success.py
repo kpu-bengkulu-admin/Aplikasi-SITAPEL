@@ -288,30 +288,23 @@ KPU Kota Bengkulu.
     # TOMBOL
     # ======================================================
 
-    col1, col2 = st.columns(2)
+    st.info(
+        "Silakan simpan Nomor Permohonan di atas. "
+        "Untuk mengetahui perkembangan permohonan, gunakan menu "
+        "\"Cek Status Permohonan\" yang tersedia pada Dashboard."
+    )
 
-    with col1:
+    if st.button(
+        "🏠 Kembali ke Dashboard",
+        type="primary",
+        use_container_width=True
+    ):
 
-        if st.button(
-            "🔍 Cek Status Permohonan",
-            type="primary",
-            use_container_width=True
-        ):
+        reset_permohonan()
 
-            st.session_state.page = "cek_status"
-            st.rerun()
+        st.session_state.page = "dashboard"
 
-    with col2:
-
-        if st.button(
-            "🏠 Kembali ke Dashboard",
-            use_container_width=True
-        ):
-
-            reset_permohonan()
-
-            st.session_state.page = "dashboard"
-            st.rerun()
+        st.rerun()
 
     st.divider()
 
@@ -345,8 +338,6 @@ margin-bottom:20px;
 Nomor tersebut digunakan untuk:
 
 <br>✅ Cek Status Permohonan
-
-<br>✅ Perbaikan Dokumen
 
 <br>✅ Melihat Hasil Verifikasi
 

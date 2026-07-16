@@ -825,7 +825,7 @@ Kosongkan apabila hanya satu orang.
         # LABEL DOKUMEN PENDUKUNG
         # ======================================================
 
-        label_pendukung = "Upload Dokumen Pendukung"
+        label_pendukung = "Upload Dokumen Pendukung (jika ada)"
 
         if jenis_layanan == "Pemilih Tidak Memenuhi Syarat (TMS)":
 
