@@ -28,9 +28,9 @@ def get_google_credentials():
         token=token_data.get("token"),
         refresh_token=token_data.get("refresh_token"),
         token_uri=token_data.get("token_uri"),
-        client_id=token_data.get("client_id"),
-        client_secret=token_data.get("client_secret"),
-        scopes=token_data.get("scopes"),
+        client_id=GOOGLE.client_id,
+        client_secret=GOOGLE.client_secret,
+        scopes=list(GOOGLE.scopes),
     )
 
     # Refresh access token jika sudah kedaluwarsa
