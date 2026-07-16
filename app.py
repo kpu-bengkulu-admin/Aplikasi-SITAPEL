@@ -7,9 +7,8 @@
 
 import os
 import streamlit as st
-
 from config import APP_NAME
-
+from views.oauth_admin import show_oauth_admin
 
 # ==========================================================
 # PAGE CONFIG
@@ -186,6 +185,14 @@ elif page == "cek_status":
 elif page == "login_admin":
 
     show_login_admin()
+
+# ==========================================================
+# OAUTH ADMIN
+# ==========================================================
+
+elif page == "oauth_admin":
+
+    show_oauth_admin()
 
 # ==========================================================
 # HALAMAN ADMIN
