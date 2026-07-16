@@ -263,14 +263,10 @@ melakukan pengecekan status permohonan.
 
 1. Petugas KPU akan memverifikasi data.
 
-2. Bila ada kekurangan dokumen,
-   status berubah menjadi
-   **Perlu Perbaikan Dokumen**.
-
-3. Bila seluruh dokumen lengkap,
+2. Bila seluruh dokumen lengkap,
    permohonan diproses.
 
-4. Gunakan Nomor Permohonan
+3. Gunakan Nomor Permohonan
    untuk mengecek status.
 """
     )
