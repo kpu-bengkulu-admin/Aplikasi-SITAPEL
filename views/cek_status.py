@@ -161,13 +161,16 @@ Komisi Pemilihan Umum Kota Bengkulu
         st.divider()
 
         # ==================================================
-        # CATATAN PETUGAS
+        # CATATAN ADMIN
         # ==================================================
 
         st.subheader("Catatan Petugas")
 
+        st.write(data)
+        st.write(data.keys())
+
         catatan = data.get(
-            "Catatan Petugas",
+            "Catatan Admin",
             ""
         )
 
@@ -193,25 +196,8 @@ Komisi Pemilihan Umum Kota Bengkulu
 
             st.warning(
                 """
-Permohonan telah diterima dan sedang menunggu proses
-verifikasi oleh petugas KPU Kota Bengkulu.
-"""
-            )
-
-        elif status == "Sedang Diverifikasi":
-
-            st.info(
-                """
-Permohonan sedang diperiksa oleh petugas verifikator.
-"""
-            )
-
-        elif status == "Perlu Perbaikan":
-
-            st.error(
-                """
-Permohonan memerlukan perbaikan dokumen.
-Silakan membaca catatan petugas.
+Permohonan telah diterima dan sedang menunggu
+proses verifikasi oleh petugas KPU Kota Bengkulu.
 """
             )
 
@@ -219,8 +205,14 @@ Silakan membaca catatan petugas.
 
             st.success(
                 """
-Permohonan telah selesai diproses.
-Terima kasih telah menggunakan SITAPEL.
+Permohonan telah diverifikasi dan diterima.
+
+Data Anda telah dimasukkan ke dalam basis data
+pemilih KPU Kota Bengkulu.
+
+Silakan melakukan pengecekan secara berkala melalui:
+
+https://cekdptonline.kpu.go.id/
 """
             )
 
@@ -229,8 +221,16 @@ Terima kasih telah menggunakan SITAPEL.
             st.error(
                 """
 Permohonan tidak dapat diproses.
-Silakan membaca catatan petugas.
+
+Silakan membaca catatan petugas pada bagian
+'Catatan Petugas' di atas.
 """
+            )
+
+        else:
+
+            st.info(
+                "Status permohonan belum tersedia."
             )
 
         st.divider()
