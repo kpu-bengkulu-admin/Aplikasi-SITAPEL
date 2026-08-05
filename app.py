@@ -7,6 +7,7 @@
 
 import os
 import streamlit as st
+st.write("Secrets:", list(st.secrets.keys()))
 from config import APP_NAME
 from views.oauth_admin import show_oauth_admin
 
