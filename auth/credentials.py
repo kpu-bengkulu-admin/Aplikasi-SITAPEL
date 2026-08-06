@@ -1,5 +1,3 @@
-raise Exception("CREDENTIALS.PY SEDANG DIPAKAI")
-
 # ==========================================================
 # SITAPEL v4
 # auth/credentials.py
